@@ -46,9 +46,9 @@ int main(int argc, char *argv[]) {
     // parse opts
     int c;
     string source = "default";
-    bool enable_agc = false;
+    bool enable_agc = true;
     bool enable_wav = true;
-    int agc_level = 10;
+    int agc_level = 31;
     string kws;
     string mic_type = "CIRCULAR_6MIC_7BEAM";
     static const struct option long_options[] = {
@@ -132,7 +132,16 @@ int main(int argc, char *argv[]) {
     respeaker->RegisterChainByHead(collector.get());
     respeaker->RegisterOutputNode(snowboy_kws.get());
     respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
-    respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());  
+    respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());
+    respeaker->RegisterDirectionManagerNode 
+ 
+  
+    int doa = snowboy_kws.GetDirection();
+  
+    if (doa == 330) {
+      snowboy_kws.SetBeanNum(330);
+    }
+  
     if (!respeaker->Start(&stop)) {
         cout << "Can not start the respeaker node chain." << endl;
         return -1;
