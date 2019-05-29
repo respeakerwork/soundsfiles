@@ -8,6 +8,8 @@
 #include <chain_nodes/pulse_collector_node.h>
 #include <chain_nodes/vep_aec_beamforming_node.h>
 #include <chain_nodes/snowboy_1b_doa_kws_node.h>
+#include <chain_nodes/direction_manager_node.h>
+
 extern "C"
 {
 #include <sndfile.h>
@@ -91,6 +93,7 @@ int main(int argc, char *argv[]) {
     unique_ptr<VepAecBeamformingNode> vep_1beam;
     unique_ptr<Snowboy1bDoaKwsNode> snowboy_kws;
     unique_ptr<ReSpeaker> respeaker;
+    unique_ptr<DirectionManagerNode> dmn;
     collector.reset(PulseCollectorNode::Create_48Kto16K(source, BLOCK_SIZE_MS));
     vep_1beam.reset(VepAecBeamformingNode::Create(StringToMicType(mic_type), true, 7, enable_wav));
     vep_1beam->SetAngleForMic0(30);
@@ -136,10 +139,10 @@ int main(int argc, char *argv[]) {
  
  
   
-    int doa = snowboy_kws.GetDirection();
+    int doa = dmn.GetDirection();
   
     if (doa == 330) {
-      snowboy_kws.SetDirection(330);
+      dmn.SetDirection(330);
     }
   
     if (!respeaker->Start(&stop)) {
