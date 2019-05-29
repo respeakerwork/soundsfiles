@@ -133,13 +133,13 @@ int main(int argc, char *argv[]) {
     respeaker->RegisterOutputNode(snowboy_kws.get());
     respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
     respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());
-    respeaker->RegisterDirectionManagerNode 
+ 
  
   
     int doa = snowboy_kws.GetDirection();
   
     if (doa == 330) {
-      snowboy_kws.SetBeanNum(330);
+      snowboy_kws.SetDirection(330);
     }
   
     if (!respeaker->Start(&stop)) {
