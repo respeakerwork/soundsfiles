@@ -87,32 +87,11 @@ int main(int argc, char *argv[]) {
     }
     unique_ptr<PulseCollectorNode> collector;
     unique_ptr<VepAecBeamformingNode> vep_1beam;
-    unique_ptr<Snowboy1bDoaKwsNode> snowboy_kws;
     unique_ptr<ReSpeaker> respeaker;
     collector.reset(PulseCollectorNode::Create_48Kto16K(source, BLOCK_SIZE_MS));
     vep_1beam.reset(VepAecBeamformingNode::Create(StringToMicType(mic_type), false, 6, enable_wav));
-    if (kws == "alexa") {
-        cout << "using alexa kws" << endl;
-        snowboy_kws.reset(Snowboy1bDoaKwsNode::Create("/usr/share/respeaker/snowboy/resources/common.res",
-                                                    // "/usr/share/respeaker/snowboy/resources/alexa.umdl",
-                                                    "/usr/share/respeaker/snowboy/resources/alexa_02092017.umdl",
-                                                    "0.5",
-                                                    10,
-                                                    enable_agc,
-                                                    false));
-    }
-    else {
-        cout << "using snowboy kws" << endl;
-        snowboy_kws.reset(Snowboy1bDoaKwsNode::Create("/usr/share/respeaker/snowboy/resources/common.res",
-                                                    "/usr/share/respeaker/snowboy/resources//snowboy.umdl",
-                                                    "0.5",
-                                                    10,
-                                                    enable_agc,
-                                                    false));
-    }
-    snowboy_kws->DisableAutoStateTransfer();
+    
     if (enable_agc) {
-        snowboy_kws->SetAgcTargetLevelDbfs(agc_level);
         cout << "AGC = -"<< agc_level<< endl;
     }
     else {
@@ -120,16 +99,10 @@ int main(int argc, char *argv[]) {
     }  
     // collector->SetThreadPriority(50);
     // vep_1beam->SetThreadPriority(99);
-    // snowboy_kws->SetThreadPriority(51);
     // vep_1beam->BindToCore(1);
-    // snowboy_kws->BindToCore(2);
     vep_1beam->Uplink(collector.get());
-    snowboy_kws->Uplink(vep_1beam.get());
     respeaker.reset(ReSpeaker::Create());
-    respeaker->RegisterChainByHead(collector.get());
-    respeaker->RegisterOutputNode(snowboy_kws.get());
-    respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
-    respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());  
+    respeaker->RegisterChainByHead(collector.get());  
     if (!respeaker->Start(&stop)) {
         cout << "Can not start the respeaker node chain." << endl;
         return -1;
@@ -169,7 +142,7 @@ int main(int argc, char *argv[]) {
         }
         if (tick++ % 5 == 0) {
             std::cout << "collector: " << collector->GetQueueDeepth() << ", vep_1beam: " <<
-            vep_1beam->GetQueueDeepth() << ", snowboy_kws: " << snowboy_kws->GetQueueDeepth() <<
+            vep_1beam->GetQueueDeepth() <<
             std::endl;
         }
     }
