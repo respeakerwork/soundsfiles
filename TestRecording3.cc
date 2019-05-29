@@ -138,10 +138,10 @@ int main(int argc, char *argv[]) {
  
  
   
-    int doa = snowboy_kws.GetDirection();
+    int doa = respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
   
     if (doa == 330) {
-      snowboy_kws.SetDirection(330);
+      respeaker->RegisterDirectionManagerNode(snowboy_kws.set(330));
     }
   
     if (!respeaker->Start(&stop)) {
