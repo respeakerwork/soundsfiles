@@ -18,6 +18,9 @@ using namespace std;
 using namespace respeaker;
 #define BLOCK_SIZE_MS    8
 static bool stop = false;
+
+VepAecBeamformingNode vabn;
+
 void SignalHandler(int signal){
   cerr << "Caught signal " << signal << ", terminating..." << endl;
   stop = true;
@@ -91,7 +94,7 @@ int main(int argc, char *argv[]) {
     unique_ptr<ReSpeaker> respeaker;
     collector.reset(PulseCollectorNode::Create_48Kto16K(source, BLOCK_SIZE_MS));
     vep_1beam.reset(VepAecBeamformingNode::Create(StringToMicType(mic_type), true, 6, enable_wav));
-    vep_1beam.reset(VepAecBeamformingNode::SetAngleForMic0(60));
+    vabn.reset(VepAecBeamformingNode::SetAngleForMic0(60));
     if (kws == "alexa") {
         cout << "using alexa kws" << endl;
         snowboy_kws.reset(Snowboy1bDoaKwsNode::Create("/usr/share/respeaker/snowboy/resources/common.res",
