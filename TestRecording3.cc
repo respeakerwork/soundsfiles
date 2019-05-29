@@ -49,7 +49,8 @@ int main(int argc, char *argv[]) {
     bool enable_agc = false;
     bool enable_wav = true;
     int agc_level = 10;
-    string mic_type, kws;
+    string kws;
+    string mic_type = "CIRCULAR_6MIC_7BEAM";
     static const struct option long_options[] = {
         {"help",         0, NULL, 'h'},
         {"source",       1, NULL, 's'},
