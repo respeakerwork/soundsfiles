@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
     
     int dir = 30;
 
-    snowboy_kws->SetDirection(dir);
+    vep_1beam->SetDirection(dir);
 
 
     if (enable_agc) {
