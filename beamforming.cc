@@ -111,7 +111,7 @@ int main(int argc, char *argv[]) {
                                                     enable_agc,
                                                     false));
     }
-    respeaker->SetDirection(30);
+   
     if (enable_agc) {
         snowboy_kws->SetAgcTargetLevelDbfs(agc_level);
         cout << "AGC = -"<< agc_level<< endl;
@@ -130,7 +130,8 @@ int main(int argc, char *argv[]) {
     respeaker->RegisterChainByHead(collector.get());
     respeaker->RegisterOutputNode(snowboy_kws.get());
     respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
-    respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());  
+    respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());
+	respeaker->RegisterDirectionManagerNode(snowboy_kws.get(SetDirection(30)));
     if (!respeaker->Start(&stop)) {
         cout << "Can not start the respeaker node chain." << endl;
         return -1;
