@@ -111,7 +111,8 @@ int main(int argc, char *argv[]) {
                                                     enable_agc,
                                                     false));
     }
-    respeaker->SetDirection(30);
+    int dir = 30;
+    respeaker->SetDirection(dir);
     if (enable_agc) {
         snowboy_kws->SetAgcTargetLevelDbfs(agc_level);
         cout << "AGC = -"<< agc_level<< endl;
