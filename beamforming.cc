@@ -136,7 +136,6 @@ int main(int argc, char *argv[]) {
     respeaker->RegisterOutputNode(snowboy_kws.get());
     respeaker->RegisterDirectionManagerNode(snowboy_kws.get());
     respeaker->RegisterHotwordDetectionNode(snowboy_kws.get());
-	respeaker->RegisterDirectionManagerNode(snowboy_kws.get(SetDirection(30)));
     if (!respeaker->Start(&stop)) {
         cout << "Can not start the respeaker node chain." << endl;
         return -1;
