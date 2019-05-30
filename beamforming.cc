@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
     
     int dir = 30;
 
-    vep_1beam->SetDirection(dir);
+    respeaker->SetDirection(dir);
 
 
     if (enable_agc) {
