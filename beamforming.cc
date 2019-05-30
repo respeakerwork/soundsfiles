@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
     
     int dir = 30;
 
-    respeaker->SetDirection(dir);
+    snowboy_kws->SetDirection(dir);
 
 
     if (enable_agc) {
