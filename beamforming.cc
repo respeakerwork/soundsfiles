@@ -8,6 +8,7 @@
 #include <chain_nodes/pulse_collector_node.h>
 #include <chain_nodes/vep_aec_beamforming_node.h>
 #include <chain_nodes/snowboy_1b_doa_kws_node.h>
+#include <chain_nodes/direction_manager_node.h>
 extern "C"
 {
 #include <sndfile.h>
