@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
     unique_ptr<Snowboy1bDoaKwsNode> snowboy_kws;
     unique_ptr<ReSpeaker> respeaker;
     collector.reset(PulseCollectorNode::Create_48Kto16K(source, BLOCK_SIZE_MS));
-    vep_1beam.reset(VepAecBeamformingNode::Create(StringToMicType(mic_type), false, 6, enable_wav));
+    vep_1beam.reset(VepAecBeamformingNode::Create(StringToMicType(mic_type), true, 6, enable_wav));
     // vep_1beam.reset(VepAec1BeamNode::Create(LINEAR_6MIC_8BEAM, 6));
     if (kws == "alexa") {
         cout << "using alexa kws" << endl;
